@@ -1,0 +1,4 @@
+View (UI) Issues:
+
+GameScene.java, MainMenu.java, MainPlayerDeck.java, and PlayerBox.java correctly handle UI but some logic leaks into them (e.g., MainPlayerDeck.java initializes specific cards).
+Solution: UI classes should not contain game logic.

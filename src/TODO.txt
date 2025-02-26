@@ -1,0 +1,59 @@
+Component	                     |  Classes (Current & Proposed)	                        |                       Changes Needed                           |
+	                             |      playerOneDeck.java, playerThreeDeck.java            |                                                                |
+============================================================================================================================================================ |
+View (User Interface)	         |   GameScene.java, MainMenu.java, PlayerBox.java	        |  Ensure no game logic is inside View classes.                  |
+                                 |                                                          |                                                                |
+=============================================================================================================================================================|
+                                 |                                                          |    Model, and update the View.                                 |
+=============================================================================================================================================================|
+
+Next Steps
+1. Refactor Model Classes (Cards.java, Deck.java)
+Problem: These classes mix game logic and UI (ImageView).
+Solution:
+Remove ImageView elements.
+Store only game-related data (rank, suit, etc.).
+Create a method like isValidMove(Card topCard) in Cards.java.
+
+2. Create a GameController.java
+You need a controller to handle:
+
+Player actions (e.g., clicking a card to play it).
+Game state updates (e.g., switching turns, drawing cards).
+Communication between GameScene.java and Deck.java.
+Example GameController.java (pseudo-code):
+
+
+public class GameController {
+    private Deck deck;
+    private Player currentPlayer;
+
+    public GameController(Deck deck) {
+        this.deck = deck;
+    }
+
+    public void playCard(Card card) {
+        if (deck.isValidMove(card)) {
+            deck.playCard(card);
+            updateView();
+        } else {
+            System.out.println("Invalid move!");
+        }
+    }
+
+    public void drawCard() {
+        currentPlayer.addCard(deck.drawCard());
+        updateView();
+    }
+
+    private void updateView() {
+        // Notify GameScene to refresh UI
+    }
+}
+
+
+3. Fix View Classes (GameScene.java, MainMenu.java)
+Problem: They contain too much logic (e.g., initializing decks directly).
+Solution:
+UI should only handle layout and display.
+GameScene.java should call GameController instead of managing game logic directly.

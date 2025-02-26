@@ -1,0 +1,4 @@
+Model (Game Logic) Issues:
+
+Cards.java and Deck.java mix game data (card representation) with JavaFX UI elements (ImageView).
+Solution: Remove JavaFX components from the model classes
